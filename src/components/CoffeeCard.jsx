@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
@@ -62,10 +63,15 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
           <button>
             <FaEye size={35} />
           </button>
-          <button>
-            <FaEdit size={35} />
-          </button>
-          <button onClick={() => handleDeleteCoffee(_id)}>
+          <Link to={`/updateCoffee/${_id}`}>
+            <button>
+              <FaEdit size={35} />
+            </button>
+          </Link>
+          <button
+            onClick={() => handleDeleteCoffee(_id)}
+            className="text-red-600"
+          >
             <MdDelete size={35} />
           </button>
         </div>
