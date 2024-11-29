@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
   const { _id, name, chef, category, photo } = coffee;
+  //   console.log(coffees)
+
   const handleDeleteCoffee = (id) => {
     console.log(id);
     Swal.fire({
@@ -16,18 +19,20 @@ const CoffeeCard = ({ coffee }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3500/coffees/${id}`,{
-            method:'DELETE'
+        fetch(`http://localhost:3500/coffees/${id}`, {
+          method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
             if (data.deletedCount > 0) {
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your Coffee has been deleted.",
-                  icon: "success"
-                });
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Coffee has been deleted.",
+                icon: "success",
+              });
+              const remaining = coffees.filter((coffee) => coffee._id !== id);
+              setCoffees(remaining);
             }
           });
       }
