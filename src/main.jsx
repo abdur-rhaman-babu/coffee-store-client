@@ -9,7 +9,6 @@ import MainLayout from "./components/MainLayout.jsx";
 import SignUp from "./components/SignUp.jsx";
 import SignIn from "./components/SignIn.jsx";
 import AuthProvider from "./Provider/AuthProvider.jsx";
-
 const router = createBrowserRouter([
   {
     path: "/",

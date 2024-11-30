@@ -1,20 +1,45 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
-  const {createUser} = useContext(AuthContext)
+  const { createUser } = useContext(AuthContext);
   const handleSignUp = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    
-    console.log(name, email, password)
 
-    createUser(email,password)
-    .then(result=>console.log(result.user))
-    .catch(error=> console.log('error',error))
+    console.log(name, email, password);
+
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        const newUser = { name, email };
+        fetch('http://localhost:3500/users', {
+          method:'POST',
+          headers:{
+            'content-type': 'application/json'
+          },
+          body:JSON.stringify(newUser)
+        })
+        .then(res=> res.json())
+        .then(data=> console.log(data))
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "User Singnup Successfully",
+        });
+      })
+      .catch((error) => {
+        console.log("error", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
   };
   return (
     <div className="hero bg-base-200 min-h-screen">
