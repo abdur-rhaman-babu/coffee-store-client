@@ -7,6 +7,7 @@ const SignUp = () => {
   const { createUser } = useContext(AuthContext);
   const handleSignUp = (e) => {
     e.preventDefault();
+    const form = e.target;
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -16,21 +17,27 @@ const SignUp = () => {
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
-        const newUser = { name, email };
-        fetch('http://localhost:3500/users', {
-          method:'POST',
-          headers:{
-            'content-type': 'application/json'
+        const time = result?.user?.metadata?.creationTime;
+        const newUser = { name, email, time };
+        fetch("http://localhost:3500/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
           },
-          body:JSON.stringify(newUser)
+          body: JSON.stringify(newUser),
         })
-        .then(res=> res.json())
-        .then(data=> console.log(data))
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "User Singnup Successfully",
-        });
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.insertedId) {
+              Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: "User Singnup Successfully",
+              });
+            }
+            form.reset()
+          });
       })
       .catch((error) => {
         console.log("error", error);
