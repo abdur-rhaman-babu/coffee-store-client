@@ -1,5 +1,7 @@
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 const AddCoffee = () => {
+  const navigate = useNavigate()
   const handleAddCoffee = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -33,6 +35,7 @@ const AddCoffee = () => {
               })
         }
       });
+      navigate('/')
   };
   return (
     <div>
@@ -47,6 +50,7 @@ const AddCoffee = () => {
                 type="text"
                 name="name"
                 placeholder="name"
+                required
               />
             </div>
             <div>
@@ -56,6 +60,7 @@ const AddCoffee = () => {
                 type="text"
                 name="chef"
                 placeholder="chef"
+                required
               />
             </div>
             <div>
@@ -65,6 +70,7 @@ const AddCoffee = () => {
                 type="text"
                 placeholder="Supplier"
                 name="supplier"
+                required
               />
             </div>
             <div>
@@ -74,6 +80,7 @@ const AddCoffee = () => {
                 type="text"
                 placeholder="Taste"
                 name="taste"
+                required
               />
             </div>
             <div>
@@ -83,6 +90,7 @@ const AddCoffee = () => {
                 type="text"
                 placeholder="Category"
                 name="category"
+                required
               />
             </div>
             <div>
@@ -92,6 +100,7 @@ const AddCoffee = () => {
                 type="text"
                 placeholder="Details"
                 name="details"
+                required
               />
             </div>
           </div>
@@ -102,9 +111,10 @@ const AddCoffee = () => {
               type="text"
               placeholder="Photo Url"
               name="photo"
+              required
             />
           </div>
-          <input
+          <input 
             className="bg-purple-500 w-full mt-4 py-2 cursor-pointer text-white font-sem'"
             type="submit"
             value="Add Coffee"
