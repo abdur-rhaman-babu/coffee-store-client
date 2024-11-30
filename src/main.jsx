@@ -8,13 +8,13 @@ import UpdateCoffee from "./components/UpdateCoffee.jsx";
 import MainLayout from "./components/MainLayout.jsx";
 import SignUp from "./components/SignUp.jsx";
 import SignIn from "./components/SignIn.jsx";
+import AuthProvider from "./Provider/AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
-    path:'/',
-    element:<MainLayout/>,
-    children:[
-
+    path: "/",
+    element: <MainLayout />,
+    children: [
       {
         path: "/",
         element: <App />,
@@ -27,22 +27,25 @@ const router = createBrowserRouter([
       {
         path: "/updateCoffee/:id",
         element: <UpdateCoffee />,
-        loader: ({ params }) => fetch(`http://localhost:3500/coffees/${params.id}`),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3500/coffees/${params.id}`),
       },
       {
-        path:'/signup',
-        element:<SignUp/>
+        path: "/signup",
+        element: <SignUp />,
       },
       {
-        path:'/signin',
-        element:<SignIn/>
-      }
-    ]
-  }
+        path: "/signin",
+        element: <SignIn />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
