@@ -48,6 +48,7 @@ const Users = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Time</th>
+              <th>Last SignIn Time</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -58,6 +59,7 @@ const Users = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user?.time}</td>
+                <td>{user?.lastSignInTime}</td>
                 <td className="space-x-4">
                   <button className="btn">Edit</button>
                   <button

@@ -3,17 +3,33 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const SignIn = () => {
-  const {signinUser} = useContext(AuthContext)
-  const handleSignInUser = e =>{
-    e.preventDefault()
+  const { signinUser } = useContext(AuthContext);
+  const handleSignInUser = (e) => {
+    e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password)
+    console.log(email, password);
 
     signinUser(email, password)
-    .then(result=> console.log(result.user))
-    .catch(error=> console.log('error', error))
-  }
+      .then((result) => {
+        console.log(result.user);
+        const lastSignInTime = result?.user?.metadata?.lastSignInTime;
+        const loginInfo = { email, lastSignInTime };
+
+        fetch('http://localhost:3500/users',{
+          method:'PATCH',
+          headers:{
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(loginInfo)
+        })
+        .then(res=> res.json())
+        .then(data=>{
+          console.log(data)
+        })
+      })
+      .catch((error) => console.log("error", error));
+  };
 
   return (
     <div className="hero bg-base-200 min-h-screen">
